@@ -2070,20 +2070,23 @@ function! s:Blame(bang,line1,line2,count,args) abort
           setlocal norelativenumber
         endif
         execute "vertical resize ".(s:linechars('.\{-\}\ze\s\+\d\+)')+1)
-        nnoremap <buffer> <silent> <F1> :help fugitive-:Gblame<CR>
-        nnoremap <buffer> <silent> g?   :help fugitive-:Gblame<CR>
-        nnoremap <buffer> <silent> q    :exe substitute(bufwinnr(b:fugitive_blamed_bufnr).' wincmd w<Bar>'.bufnr('').'bdelete','^-1','','')<CR>
-        nnoremap <buffer> <silent> gq   :exe substitute(bufwinnr(b:fugitive_blamed_bufnr).' wincmd w<Bar>'.bufnr('').'bdelete<Bar>if expand("%:p") =~# "^fugitive:[\\/][\\/]"<Bar>Gedit<Bar>endif','^-1','','')<CR>
-        nnoremap <buffer> <silent> <CR> :<C-U>exe <SID>BlameCommit("exe 'norm q'<Bar>edit")<CR>
-        nnoremap <buffer> <silent> -    :<C-U>exe <SID>BlameJump('')<CR>
-        nnoremap <buffer> <silent> P    :<C-U>exe <SID>BlameJump('^'.v:count1)<CR>
-        nnoremap <buffer> <silent> ~    :<C-U>exe <SID>BlameJump('~'.v:count1)<CR>
-        nnoremap <buffer> <silent> i    :<C-U>exe <SID>BlameCommit("exe 'norm q'<Bar>edit")<CR>
+        " nnoremap <buffer> <silent> <F1> :help fugitive-:Gblame<CR>
+        " nnoremap <buffer> <silent> g?   :help fugitive-:Gblame<CR>
+        nnoremap <buffer> <silent> e    :exe substitute(bufwinnr(b:fugitive_blamed_bufnr).' wincmd w<Bar>'.bufnr('').'bdelete','^-1','','')<CR>
+        " nnoremap <buffer> <silent> gq   :exe substitute(bufwinnr(b:fugitive_blamed_bufnr).' wincmd w<Bar>'.bufnr('').'bdelete<Bar>if expand("%:p") =~# "^fugitive:[\\/][\\/]"<Bar>Gedit<Bar>endif','^-1','','')<CR>
+        nnoremap <buffer> <silent> <esc>   :exe substitute(bufwinnr(b:fugitive_blamed_bufnr).' wincmd w<Bar>'.bufnr('').'bdelete<Bar>if expand("%:p") =~# "^fugitive:[\\/][\\/]"<Bar>Gedit<Bar>endif','^-1','','')<CR>
+        nmap <buffer> q <esc>
+        " nnoremap <buffer> <silent> <CR> :<C-U>exe <SID>BlameCommit("exe 'norm q'<Bar>edit")<CR>
+        " nnoremap <buffer> <silent> -    :<C-U>exe <SID>BlameJump('')<CR>
+        " nnoremap <buffer> <silent> P    :<C-U>exe <SID>BlameJump('^'.v:count1)<CR>
+        nnoremap <buffer> <silent> p    :<C-U>exe <SID>BlameJump('^'.v:count1)<CR>
+        " nnoremap <buffer> <silent> ~    :<C-U>exe <SID>BlameJump('~'.v:count1)<CR>
+        " nnoremap <buffer> <silent> i    :<C-U>exe <SID>BlameCommit("exe 'norm q'<Bar>edit")<CR>
         nnoremap <buffer> <silent> o    :<C-U>exe <SID>BlameCommit((&splitbelow ? "botright" : "topleft")." split")<CR>
-        nnoremap <buffer> <silent> O    :<C-U>exe <SID>BlameCommit("tabedit")<CR>
-        nnoremap <buffer> <silent> A    :<C-u>exe "vertical resize ".(<SID>linechars('.\{-\}\ze [0-9:/+-][0-9:/+ -]* \d\+)')+1+v:count)<CR>
-        nnoremap <buffer> <silent> C    :<C-u>exe "vertical resize ".(<SID>linechars('^\S\+')+1+v:count)<CR>
-        nnoremap <buffer> <silent> D    :<C-u>exe "vertical resize ".(<SID>linechars('.\{-\}\ze\d\ze\s\+\d\+)')+1-v:count)<CR>
+        " nnoremap <buffer> <silent> O    :<C-U>exe <SID>BlameCommit("tabedit")<CR>
+        " nnoremap <buffer> <silent> A    :<C-u>exe "vertical resize ".(<SID>linechars('.\{-\}\ze [0-9:/+-][0-9:/+ -]* \d\+)')+1+v:count)<CR>
+        " nnoremap <buffer> <silent> C    :<C-u>exe "vertical resize ".(<SID>linechars('^\S\+')+1+v:count)<CR>
+        " nnoremap <buffer> <silent> D    :<C-u>exe "vertical resize ".(<SID>linechars('.\{-\}\ze\d\ze\s\+\d\+)')+1-v:count)<CR>
         redraw
         syncbind
       endif
@@ -2820,7 +2823,7 @@ function! s:JumpInit(...) abort
     nnoremap <buffer> <silent> o     :<C-U>exe <SID>GF("split")<CR>
     nnoremap <buffer> <silent> S     :<C-U>exe <SID>GF("vsplit")<CR>
     nnoremap <buffer> <silent> O     :<C-U>exe <SID>GF("tabedit")<CR>
-    nnoremap <buffer> <silent> -     :<C-U>exe <SID>Edit('edit',0,<SID>buffer().up(v:count1))<Bar> if fugitive#buffer().type('tree')<Bar>call search('^'.escape(expand('#:t'),'.*[]~\').'/\=$','wc')<Bar>endif<CR>
+    " nnoremap <buffer> <silent> -     :<C-U>exe <SID>Edit('edit',0,<SID>buffer().up(v:count1))<Bar> if fugitive#buffer().type('tree')<Bar>call search('^'.escape(expand('#:t'),'.*[]~\').'/\=$','wc')<Bar>endif<CR>
     nnoremap <buffer> <silent> P     :<C-U>exe <SID>Edit('edit',0,<SID>buffer().commit().'^'.v:count1.<SID>buffer().path(':'))<CR>
     nnoremap <buffer> <silent> ~     :<C-U>exe <SID>Edit('edit',0,<SID>buffer().commit().'~'.v:count1.<SID>buffer().path(':'))<CR>
     nnoremap <buffer> <silent> C     :<C-U>exe <SID>Edit('edit',0,<SID>buffer().containing_commit())<CR>
@@ -2830,6 +2833,8 @@ function! s:JumpInit(...) abort
     nnoremap <buffer> <silent> cO    :<C-U>exe <SID>Edit('tabedit',0,<SID>buffer().containing_commit())<CR>
     nnoremap <buffer> <silent> cP    :<C-U>exe <SID>Edit('pedit',0,<SID>buffer().containing_commit())<CR>
     nnoremap <buffer>          .     : <C-R>=fnameescape(<SID>recall())<CR><Home>
+    nnoremap <buffer> <silent> <esc> :q<cr>
+    nmap <buffer> q <esc>
   endif
 endfunction
 
